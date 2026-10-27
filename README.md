@@ -1,6 +1,6 @@
 # E-Commerce Analytics Platform \| Databricks, PySpark & SQL
 
-An end-to-end e-commerce data engineering and analytics project built
+An  e-commerce data engineering and analytics project built
 with **Databricks**, **PySpark**, **Spark SQL**, and **Delta Lake**. The
 project organizes raw e-commerce data into a Medallion Architecture
 (**Bronze → Silver → Gold**) and prepares curated datasets for sales and
