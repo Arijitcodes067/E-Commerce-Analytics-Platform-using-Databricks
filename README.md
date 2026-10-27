@@ -134,23 +134,6 @@ policy.
 I also built **Sales** and **Marketing** dashboards in Databricks using
 the curated project data.
 
-Suggested dashboard evidence to add to this repository: -
-`docs/images/sales-dashboard.png` -
-`docs/images/marketing-dashboard.png`
-
-If you publish a dashboard using Databricks' sharing options, add the
-relevant link here:
-
--   **Sales dashboard:** *Add your shareable Databricks dashboard URL*
--   **Marketing dashboard:** *Add your shareable Databricks dashboard
-    URL*
-
-If the dashboard cannot be shared publicly, use sanitized screenshots
-with sensitive data removed and explain that the interactive dashboard
-is available on request. Do not commit workspace credentials, access
-tokens, customer-level personal data, or private workspace URLs that
-reveal restricted information.
-
 ## Repository Structure
 
 A recruiter-friendly layout could look like this:
@@ -210,17 +193,6 @@ The notebooks use `mode("overwrite")` for table writes, so rerunning
 them replaces existing table data. Review this behavior before using the
 pipeline with production data.
 
-## Data and Access Notes
-
--   Raw file paths point to a Databricks Unity Catalog Volume and will
-    need to be configured in another workspace.
--   The repository contains transformation logic, not a portable copy of
-    the Databricks catalog or its underlying data.
--   Catalog names, schemas, table definitions, permissions, dashboard
-    assets, and data are separate items. Document or export the relevant
-    metadata if you want others to reproduce the setup.
--   Never commit credentials, personal customer data, proprietary
-    datasets, or workspace secrets.
 
 ## What This Project Demonstrates
 
@@ -229,7 +201,7 @@ pipeline with production data.
 -   Applying explicit schemas and ingestion metadata
 -   Cleaning inconsistent real-world data with PySpark
 -   Creating dimensional and fact models for BI
--   Using Spark SQL to build a denormalized analytical view
+-   Using Spark SQL to build a denormalised analytical view
 -   Enriching sales data with currency conversion logic
 -   Preparing curated data for sales and marketing dashboards in
     Databricks
@@ -238,5 +210,5 @@ pipeline with production data.
 
 **Arijit Bhattacharjee**
 
--   GitHub: *Add your GitHub profile URL*
--   LinkedIn: *Add your LinkedIn profile URL*
+-   GitHub: Arijitcodes067
+-   LinkedIn: https://www.linkedin.com/in/arijit-bhattacharjee-5132b01a0/
