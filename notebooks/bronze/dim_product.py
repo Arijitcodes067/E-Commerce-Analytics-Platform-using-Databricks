@@ -1,0 +1,54 @@
+# Databricks notebook source
+# ---
+# Script:  dim_product (Bronze - Products)
+# Purpose: Ingest products CSV from raw volume into ecommerce.bronze.brz_products
+# ---
+
+from pyspark.sql.types import (
+    StructType, StructField, StringType, FloatType,
+    IntegerType, TimestampType
+)
+from pyspark.sql import functions as F
+
+catalog_name = "ecommerce"
+
+products_schema = StructType([
+    StructField("product_id", StringType(), False),
+    StructField("sku", StringType(), True),
+    StructField("category_code", StringType(), True),
+    StructField("brand_code", StringType(), True),
+    StructField("color", StringType(), True),
+    StructField("size", StringType(), True),
+    StructField("material", StringType(), True),
+    StructField("weight_grams", StringType(), True),
+    StructField("length_cm", StringType(), True),
+    StructField("width_cm", FloatType(), True),
+    StructField("height_cm", FloatType(), True),
+    StructField("rating_count", IntegerType(), True),
+    StructField("file_name", StringType(), False),
+    StructField("ingest_timestamp", TimestampType(), False)
+])
+
+raw_data_path = (
+    "/Volumes/ecommerce/source_data/raw/order_items/"
+    "ecomm-raw-data/products/products.csv"
+)
+
+df = (
+    spark.read
+    .option("header", "true")
+    .option("delimiter", ",")
+    .schema(products_schema)
+    .csv(raw_data_path)
+)
+
+df = (
+    df
+    .withColumn("file_name", F.col("_metadata.file_path"))
+    .withColumn("ingest_timestamp", F.current_timestamp())
+)
+
+df.write.format("delta") \
+    .mode("overwrite") \
+    .option("mergeSchema", "true") \
+    .saveAsTable(f"{catalog_name}.bronze.brz_products")

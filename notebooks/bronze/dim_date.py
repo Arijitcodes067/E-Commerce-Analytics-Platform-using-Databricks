@@ -1,0 +1,41 @@
+# Databricks notebook source
+# ---
+# Script:  dim_date (Bronze - Calendar)
+# Purpose: Ingest calendar CSV from raw volume into ecommerce.bronze.brz_calendar
+# ---
+
+from pyspark.sql.types import (
+    StructType, StructField, StringType, IntegerType
+)
+from pyspark.sql import functions as F
+
+catalog_name = "ecommerce"
+
+date_schema = StructType([
+    StructField("date", StringType(), True),
+    StructField("year", IntegerType(), True),
+    StructField("day_name", StringType(), True),
+    StructField("quarter", IntegerType(), True),
+    StructField("week_of_year", IntegerType(), True)
+])
+
+raw_data_path = "/Volumes/ecommerce/source_data/raw/order_items/ecomm-raw-data/date/date.csv"
+
+df_raw = (
+    spark.read
+    .option("header", "true")
+    .option("delimiter", ",")
+    .schema(date_schema)
+    .csv(raw_data_path)
+)
+
+df_raw = (
+    df_raw
+    .withColumn("_ingested_at", F.current_timestamp())
+    .withColumn("_source_file", F.col("_metadata.file_path"))
+)
+
+df_raw.write.format("delta") \
+    .mode("overwrite") \
+    .option("mergeSchema", "true") \
+    .saveAsTable(f"{catalog_name}.bronze.brz_calendar")

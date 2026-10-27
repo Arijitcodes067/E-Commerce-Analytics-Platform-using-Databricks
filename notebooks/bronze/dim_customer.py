@@ -1,0 +1,37 @@
+# Databricks notebook source
+# ---
+# Script:  dim_customer (Bronze - Customers)
+# Purpose: Ingest customers CSV from raw volume into ecommerce.bronze.brz_customers
+# ---
+
+from pyspark.sql.types import (
+    StructType, StructField, StringType
+)
+from pyspark.sql import functions as F
+
+catalog_name = "ecommerce"
+
+customers_schema = StructType([
+    StructField("customer_id", StringType(), False),
+    StructField("phone", StringType(), True),
+    StructField("state", StringType(), True)
+])
+
+raw_data_path = "/Volumes/ecommerce/source_data/raw/order_items/ecomm-raw-data/customers/customers.csv"
+
+df_raw = (
+    spark.read
+    .option("header", "true")
+    .option("delimiter", ",")
+    .schema(customers_schema)
+    .csv(raw_data_path)
+)
+
+df_raw = df_raw.withColumn(
+    "ingest_timestamp", F.current_timestamp()
+)
+
+df_raw.write.format("delta") \
+    .mode("overwrite") \
+    .option("mergeSchema", "true") \
+    .saveAsTable(f"{catalog_name}.bronze.brz_customers")

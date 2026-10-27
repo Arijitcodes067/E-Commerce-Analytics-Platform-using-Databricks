@@ -1,0 +1,149 @@
+{
+  "dashboards": [
+    {
+      "displayName": "E-commerce Sales Insights",
+      "datasets": [
+        {
+          "name": "fact_transactions_denorm",
+          "displayName": "fact_transactions_denorm",
+          "query": "",
+          "catalog": null,
+          "schema": null
+        }
+      ],
+      "pages": [
+        {
+          "displayName": "Marketing Insights",
+          "widgets": [
+            {
+              "title": "Marketing Insights",
+              "widgetType": "text"
+            },
+            {
+              "title": "Distinct Customers",
+              "widgetType": "counter",
+              "query": "COUNT(DISTINCT customer_id)"
+            },
+            {
+              "title": "Coupon Redemption Rate",
+              "widgetType": "counter",
+              "query": "MEASURE(coupon_redemption_rate)"
+            },
+            {
+              "title": "Coupon Net Sales",
+              "widgetType": "counter",
+              "query": "SUM(net_amount) WHERE coupon_flag=1"
+            },
+            {
+              "title": "Coupons Used",
+              "widgetType": "counter",
+              "query": "COUNT(DISTINCT coupon_code)"
+            },
+            {
+              "title": "Net Amount Distribution",
+              "widgetType": "histogram",
+              "field": "net_amount"
+            },
+            {
+              "title": "Customers by Channel",
+              "widgetType": "bar",
+              "x": "channel",
+              "y": "COUNT(DISTINCT customer_id)"
+            },
+            {
+              "title": "Top 10 Coupons by Net Sales",
+              "widgetType": "bar",
+              "x": "coupon_code",
+              "y": "SUM(net_amount)"
+            },
+            {
+              "title": "Weekend vs Weekday Net Sales",
+              "widgetType": "bar",
+              "x": "is_weekend (Weekday/Weekend)",
+              "y": "SUM(net_amount)"
+            },
+            {
+              "title": "Net Sales Trend by Channel",
+              "widgetType": "line",
+              "x": "month_name",
+              "y": "SUM(net_amount)",
+              "color": "channel"
+            }
+          ]
+        },
+        {
+          "displayName": "Sales Insights",
+          "widgets": [
+            {
+              "title": "Sales Insights",
+              "widgetType": "text"
+            },
+            {
+              "title": "Monthly Sales Trend by Year",
+              "widgetType": "line",
+              "x": "month_name",
+              "y": "SUM(net_amount)",
+              "color": "year"
+            },
+            {
+              "title": "Total Net Sales",
+              "widgetType": "counter",
+              "query": "SUM(net_amount)"
+            },
+            {
+              "title": "Total Orders",
+              "widgetType": "counter",
+              "query": "COUNT(DISTINCT transaction_id)"
+            },
+            {
+              "title": "Units Sold",
+              "widgetType": "counter",
+              "query": "SUM(quantity)"
+            },
+            {
+              "title": "Avg Order Value",
+              "widgetType": "counter",
+              "query": "MEASURE(avg_order_value)"
+            },
+            {
+              "title": "Net Sales by Channel",
+              "widgetType": "pie",
+              "angle": "SUM(net_amount)",
+              "color": "channel"
+            },
+            {
+              "title": "Net Sales by Coupon Usage",
+              "widgetType": "bar",
+              "x": "coupon_flag (No Coupon/Coupon)",
+              "y": "SUM(net_amount)"
+            },
+            {
+              "title": "Net Sales by Hour of Day",
+              "widgetType": "bar",
+              "x": "hour_of_day",
+              "y": "SUM(net_amount)"
+            },
+            {
+              "title": "Net Sales by Day of Week",
+              "widgetType": "bar",
+              "x": "day_name",
+              "y": "SUM(net_amount)"
+            },
+            {
+              "title": "Top 10 Products by Net Sales",
+              "widgetType": "bar",
+              "x": "product_id",
+              "y": "SUM(net_amount)"
+            },
+            {
+              "title": "Net Sales by Category",
+              "widgetType": "bar",
+              "x": "category_name",
+              "y": "SUM(net_amount)"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

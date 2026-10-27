@@ -1,0 +1,72 @@
+-- ============================================================
+-- Gold Layer: BI-ready fact & dimension tables (ecommerce.gold)
+-- These tables are created by the Gold notebooks via saveAsTable.
+-- DDL shown here for documentation and reproducibility.
+-- ============================================================
+
+-- Fact Order Items: with calculated amounts, currency conversion to INR
+CREATE TABLE IF NOT EXISTS ecommerce.gold.gld_fact_order_items (
+    date_id              INT,
+    transaction_date     DATE,
+    transaction_ts       TIMESTAMP,
+    transaction_id       STRING,
+    customer_id          STRING,
+    seq_no               STRING,
+    product_id           STRING,
+    channel              STRING,
+    coupon_code          STRING,
+    coupon_flag          INT,
+    unit_price_currency  STRING,
+    quantity             INT,
+    unit_price           FLOAT,
+    gross_amount         DOUBLE,
+    discount_percent     FLOAT,
+    discount_amount      LONG,
+    tax_amount           FLOAT,
+    net_amount           DOUBLE,
+    net_amount_inr       LONG
+) USING DELTA;
+
+-- Dim Customers: with country & region enrichment
+CREATE TABLE IF NOT EXISTS ecommerce.gold.gld_dim_customers (
+    state              STRING,
+    customer_id        STRING,
+    phone              STRING,
+    ingest_timestamp   TIMESTAMP,
+    country            STRING,
+    region             STRING
+) USING DELTA;
+
+-- Dim Date: with date_id, month_name, is_weekend, formatted quarter & week
+CREATE TABLE IF NOT EXISTS ecommerce.gold.gld_dim_date (
+    date_id         INT,
+    date            DATE,
+    year            INT,
+    month_name      STRING,
+    day_name        STRING,
+    is_weekend      INT,
+    quarter         STRING,
+    week            STRING,
+    _ingested_at    TIMESTAMP,
+    _source_file    STRING
+) USING DELTA;
+
+-- Dim Products: enriched with brand & category names
+CREATE TABLE IF NOT EXISTS ecommerce.gold.gld_dim_products (
+    product_id        STRING,
+    sku               STRING,
+    category_code     STRING,
+    category_name     STRING,
+    brand_code        STRING,
+    brand_name        STRING,
+    color             STRING,
+    size              STRING,
+    material          STRING,
+    weight_grams      STRING,
+    length_cm         STRING,
+    width_cm          FLOAT,
+    height_cm         FLOAT,
+    rating_count      INT,
+    file_name         STRING,
+    ingest_timestamp  TIMESTAMP
+) USING DELTA;

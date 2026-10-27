@@ -1,0 +1,24 @@
+# Databricks
+.databricks/
+*.log
+
+# Secrets & credentials
+*.env
+*.key
+*.pem
+*.token
+*secrets*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Raw data (do not commit datasets)
+data/raw/*.csv
+data/raw/*.json
+data/raw/*.parquet
+data/raw/*.csv.gz
